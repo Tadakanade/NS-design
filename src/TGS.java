@@ -18,16 +18,22 @@ class TGSThread extends Thread{
 				InputStream in =Sockets.getInputStream();
 				ObjectInputStream ois =new ObjectInputStream(in);
 				@SuppressWarnings("unchecked")
-				HashMap<String,String> fromclient = (HashMap<String,String>)ois.readObject();
+				
+				
+				HashMap<String,String> fromclient = (HashMap<String,String>)ois.readObject();//拆包
 				System.out.println("portnum:"+portnum);
 				HashMap<String,String> toclient = new HashMap<String,String>();
 				String Prelude = fromclient.get("Prelude");
 				System.out.println("Prelude:"+Prelude);
 				Calendar c = Calendar.getInstance(); 
+				
+				//添加时间信息
 				int month = c.get(Calendar.MONTH);
 				int date = c.get(Calendar.DATE);
 				int hour = c.get(Calendar.HOUR_OF_DAY);
 				int minute = c.get(Calendar.MINUTE);
+				
+				//装包
 				toclient.put("Prelude", "100000000000");
 				toclient.put("key(c,v)", "12345567");
 				toclient.put("IDv", "tgs");
