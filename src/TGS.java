@@ -12,6 +12,7 @@ class TGSThread extends Thread{
 			try {
 				ServerSocket Servers = new ServerSocket(portnum);
 				while(true) {
+				//TGS收到了来自客户端的数据包
 				Socket Sockets = Servers.accept();
 				OutputStream os = Sockets.getOutputStream();
 				ObjectOutputStream oos =new ObjectOutputStream(os);
@@ -19,13 +20,15 @@ class TGSThread extends Thread{
 				ObjectInputStream ois =new ObjectInputStream(in);
 				@SuppressWarnings("unchecked")
 				
-				
-				HashMap<String,String> fromclient = (HashMap<String,String>)ois.readObject();//拆包
+				//拆包，提取首部
+				HashMap<String,String> fromclient = (HashMap<String,String>)ois.readObject();
 				System.out.println("portnum:"+portnum);
 				HashMap<String,String> toclient = new HashMap<String,String>();
 				String Prelude = fromclient.get("Prelude");
 				System.out.println("Prelude:"+Prelude);
 				Calendar c = Calendar.getInstance(); 
+				//对首部编码进行判断
+				
 				
 				//添加时间信息
 				int month = c.get(Calendar.MONTH);
